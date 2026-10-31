@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#12100d" />
+  <meta name="description" content="Ashenreach — a 2D dark-fantasy colony chronicle with deep simulation systems." />
+  <title>Ashenreach — A D&D Colony Chronicle</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%2315100b'/%3E%3Cpath d='M16 3 27 9v14L16 29 5 23V9Z' fill='none' stroke='%23c9a15c' stroke-width='1.4'/%3E%3Cpath d='m16 9 2.5 4.5L23 16l-4.5 2.5L16 23l-2.5-4.5L9 16l4.5-2.5Z' fill='%23e9c987'/%3E%3C/svg%3E" />
+  <script type="module" crossorigin src="./assets/index-CO1k7ZUK.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DdzEuuiw.css">
+</head>
+<body>
+  <div id="app">
+    <canvas id="world" aria-label="Ashenreach colony map"></canvas>
+    <div class="map-vignette"></div>
+    <div class="map-grain"></div>
+
+    <header id="hud">
+      <div class="brand">
+        <div class="sigil" aria-hidden="true">
+          <svg viewBox="0 0 40 40"><path d="M20 3 34 11v18L20 37 6 29V11Z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M20 8v24M11 14l18 12M29 14 11 26" stroke="currentColor" stroke-width=".7" opacity=".7"/><circle cx="20" cy="20" r="4.4" fill="none" stroke="currentColor" stroke-width="1.2"/></svg>
+        </div>
+        <div class="brand-copy">
+          <h1>ASHENREACH</h1>
+          <span>A D&amp;D colony chronicle</span>
+        </div>
+      </div>
+
+      <div class="chrono" id="chrono">
+        <div class="chrono-date"><span id="date-label">1st of Highsun</span><i></i><span id="year-label">Year 732</span></div>
+        <div class="chrono-time"><span id="time-label">07:10</span><b id="time-phase">Dawn</b></div>
+        <div class="sun-track"><span id="sun-dot"></span></div>
+        <div class="weather" id="weather-label"><span class="weather-glyph">☼</span><span>Clear skies</span></div>
+      </div>
+
+      <div class="resources" id="resource-bar"></div>
+
+      <div class="hud-actions">
+        <button class="icon-btn" id="btn-minimap" title="Toggle overview map" aria-label="Toggle overview map">▦</button>
+        <button class="icon-btn" id="btn-help" title="How to play" aria-label="How to play">?</button>
+        <button class="icon-btn" id="btn-menu" title="Chronicle menu" aria-label="Chronicle menu">☰</button>
+      </div>
+    </header>
+
+    <aside id="left-panel" class="panel">
+      <div class="panel-corners"></div>
+      <nav class="codex-tabs" id="codex-tabs" aria-label="Chronicle sections">
+        <button class="tab active" data-tab="colony"><span>❖</span>Colony</button>
+        <button class="tab" data-tab="work"><span>⚒</span>Work</button>
+        <button class="tab" data-tab="build"><span>⌂</span>Build</button>
+        <button class="tab" data-tab="research"><span>✦</span>Arcana</button>
+        <button class="tab" data-tab="world"><span>◈</span>World</button>
+      </nav>
+      <div class="panel-scroll" id="left-content"></div>
+      <div class="panel-footer" id="left-footer">
+        <span class="live-dot"></span><span id="colony-status">Colony awakening…</span>
+      </div>
+    </aside>
+
+    <aside id="right-panel" class="panel">
+      <div class="panel-corners"></div>
+      <button id="right-close" aria-label="Close inspector">×</button>
+      <div class="panel-scroll" id="right-content"></div>
+    </aside>
+
+    <div id="bottom-bar">
+      <div class="speed-cluster" role="group" aria-label="Time controls">
+        <button class="speed-btn" data-speed="0" title="Pause (Space)">❚❚</button>
+        <button class="speed-btn active" data-speed="1" title="Normal speed (1)">▶</button>
+        <button class="speed-btn" data-speed="2" title="Fast (2)">▶▶</button>
+        <button class="speed-btn" data-speed="3" title="Very fast (3)">▶▶▶</button>
+      </div>
+      <div class="alert-ribbon" id="alert-ribbon">
+        <span class="alert-icon">✧</span><span id="alert-text">Five wanderers have claimed the old waystone. Their story begins.</span>
+      </div>
+      <div class="bottom-stats" id="bottom-stats"></div>
+    </div>
+
+    <div id="toast-stack" aria-live="polite"></div>
+    <div id="event-banner" class="hidden" aria-live="assertive"></div>
+    <div id="tooltip" class="hidden"></div>
+
+    <div id="start-screen">
+      <div class="start-fog fog-a"></div>
+      <div class="start-fog fog-b"></div>
+      <div class="start-crest">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <path d="M60 7 105 32v56L60 113 15 88V32Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M60 18 95 38v44L60 102 25 82V38Z" fill="none" stroke="currentColor" stroke-width=".6" opacity=".65"/>
+          <path d="M60 25v70M30 45l60 30M90 45 30 75" stroke="currentColor" stroke-width=".5" opacity=".35"/>
+          <circle cx="60" cy="60" r="15" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="m60 43 4.5 12.5L77 60l-12.5 4.5L60 77l-4.5-12.5L43 60l12.5-4.5Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <p class="eyebrow">The Sundered Marches · Year 732</p>
+      <h2>ASHENREACH</h2>
+      <p class="start-sub">A dark-fantasy colony chronicle of survival, sorcery, and stubborn hope.</p>
+      <div class="start-rule"><span></span>❖<span></span></div>
+      <p class="start-blurb">Five exiles. One broken waystone. An open world that remembers every choice.<br/>Build a haven, bargain with strange powers, and keep the fire burning.</p>
+      <button id="start-btn" class="start-btn"><span>Start Game</span><small>Enter the Marches</small></button>
+      <div class="start-features">
+        <span>◈ Living colony</span><span>⚔ Tactical raids</span><span>✦ Deep arcana</span><span>◉ Open world</span>
+      </div>
+      <p class="start-foot">A self-contained browser chronicle · Sound suggested</p>
+    </div>
+
+    <div id="modal-layer" class="hidden">
+      <div class="modal" role="dialog" aria-modal="true">
+        <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+
+    <div id="overview" class="hidden">
+      <div class="overview-head"><span>THE SUNDERED MARCHES</span><button id="overview-close" aria-label="Close map">×</button></div>
+      <canvas id="overview-canvas"></canvas>
+      <div class="overview-legend">Click anywhere on the map to travel there · Drag the map to look around</div>
+    </div>
+  </div>
+</body>
+</html>
