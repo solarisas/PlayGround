@@ -16,12 +16,13 @@ export const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 export const dist = (a, b, c, d) => Math.hypot(a - c, b - d);
 export const key = (x, y) => x + ',' + y;
 
-export function generateWorld(seed = 732) {
+export function generateWorld(seed = 732, spawn = null) {
   const rng = mulberry32(seed);
   const w = 64, h = 44;
   const tiles = new Uint8Array(w * h);
   const variant = new Uint8Array(w * h);
-  const campX = 29, campY = 22;
+  const campX = clamp(Math.round(spawn?.x ?? 29), 8, w - 9);
+  const campY = clamp(Math.round(spawn?.y ?? 22), 7, h - 6);
 
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {

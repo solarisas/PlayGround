@@ -221,54 +221,152 @@ export const WORLD_LOCATIONS = [
   { id: 'rift', name: 'The Sundered Rift', type: 'rift', x: 56, y: 37, discovered: false, desc: 'A wound in the world. Arcana pours out like heat from a forge.', danger: 4 },
 ];
 
+export const SCENARIOS = {
+  hearth: {
+    id: 'hearth', name: 'The Last Hearth', icon: '✦', difficulty: 1, difficultyLabel: 'Measured',
+    partySize: 5, tagline: 'Five exiles. One broken waystone. A fire that refuses to go out.',
+    desc: 'Driven from the lowlands with tools, seed, and a rumour of safe ground, your people have found an old waystone. Raise a home before the dark notices.',
+    lore: 'The Marches are wide, hungry, and full of old promises. Build. Survive. Belong.',
+    resources: { wood: 180, stone: 110, food: 55, meals: 12, herbs: 8, crystal: 3, silver: 42 },
+    researchPoints: 24, completedResearch: [], activeResearch: 'agriculture',
+    kit: { tent: 1, stockpile: 1, workbench: 1, researchDesk: 1, well: 1, farms: 5, palisades: 6, watchtower: 0, shrine: 0 },
+    suggestedNarrator: 'warden', eventPace: 1, threatScale: 1, safeFirst: true,
+    startLog: [
+      ['The exiles light the waystone fire. <strong>Ashenreach</strong> is founded.', '✦', 'epic'],
+      ['A broken waystone hums beneath the camp. Its dream is not a kind one.', '◈', ''],
+      ['Sunwheat is sown. The first harvest will decide how the winter tastes.', '❦', 'good'],
+    ],
+    opening: 'Five exiles have claimed a broken waystone. The fire is lit. The Marches are watching.',
+  },
+  caravan: {
+    id: 'caravan', name: 'The Broken Caravan', icon: '✧', difficulty: 2, difficultyLabel: 'Hard',
+    partySize: 3, tagline: 'Three survivors. Half a wagon. No rescue coming.',
+    desc: 'The wagon burned on the old road. You salvaged a hatchet, a cookpot, and each other. The trees thinned at dusk, and you stopped walking.',
+    lore: 'There is no relief column. There is only what you can carry, and what you can become.',
+    resources: { wood: 82, stone: 45, food: 28, meals: 6, herbs: 3, crystal: 1, silver: 22 },
+    researchPoints: 10, completedResearch: [], activeResearch: 'agriculture',
+    kit: { tent: 1, stockpile: 0, workbench: 1, researchDesk: 0, well: 0, farms: 2, palisades: 0, watchtower: 0, shrine: 0 },
+    suggestedNarrator: 'randy', eventPace: 1.18, threatScale: 1.08, safeFirst: false,
+    startLog: [
+      ['Three survivors crawl out of the burned wagon and claim a strip of untamed ground.', '✧', 'epic'],
+      ['The wagon is gone. The road behind is quiet. The forest ahead is not.', '◈', ''],
+      ['A cookpot, a hatchet, and half a sack of grain. It will have to be enough.', '❦', 'good'],
+    ],
+    opening: 'The wagon is ash. Three survivors have stopped walking. The Marches do not offer shelter. You will have to take it.',
+  },
+  outpost: {
+    id: 'outpost', name: 'The Iron Outpost', icon: '⛨', difficulty: 3, difficultyLabel: 'Severe',
+    partySize: 4, tagline: 'A wall is only the first promise.',
+    desc: 'A dead kingdom’s charter names this ridge a border fort. No relief will come. The pines are full of things that would like the wall for themselves.',
+    lore: 'Hold the line. There is no one behind you, and nothing but old teeth in front.',
+    resources: { wood: 215, stone: 175, food: 36, meals: 8, herbs: 6, crystal: 2, silver: 58 },
+    researchPoints: 18, completedResearch: ['stonecraft'], activeResearch: 'agriculture',
+    kit: { tent: 1, stockpile: 1, workbench: 1, researchDesk: 1, well: 1, farms: 3, palisades: 9, watchtower: 1, shrine: 0 },
+    suggestedNarrator: 'choir', eventPace: .82, threatScale: 1.34, safeFirst: false,
+    startLog: [
+      ['The charter is nailed to the gatepost. <strong>Ashenreach</strong> is a border fort now.', '⛨', 'epic'],
+      ['The watchtower is empty. The beacon has not been lit in a hundred years.', '◈', ''],
+      ['Old blood on the palisade. It is not yours. Yet.', '☠', 'bad'],
+    ],
+    opening: 'A border fort with no kingdom behind it. Four soldiers, one wall, and a forest that has been waiting.',
+  },
+  covenant: {
+    id: 'covenant', name: 'The Ash Covenant', icon: '◈', difficulty: 4, difficultyLabel: 'Cursed',
+    partySize: 3, tagline: 'A bargain written before you were born.',
+    desc: 'Your order kept the old waystone lit. The order is gone. The debt is not. The stone remembers your names, and something beneath it is listening.',
+    lore: 'The veil is thin here because you made it thin. Feed the stone. Keep your promises.',
+    resources: { wood: 70, stone: 80, food: 24, meals: 4, herbs: 10, crystal: 14, silver: 18 },
+    researchPoints: 70, completedResearch: ['arcana'], activeResearch: 'astronomy',
+    kit: { tent: 1, stockpile: 1, workbench: 1, researchDesk: 1, well: 0, farms: 2, palisades: 4, watchtower: 0, shrine: 1 },
+    suggestedNarrator: 'randy', eventPace: 1.08, threatScale: 1.24, safeFirst: false,
+    startLog: [
+      ['The ash-marked exiles kneel at the broken shrine. <strong>Ashenreach</strong> is consecrated.', '◈', 'epic'],
+      ['The waystone accepts your names. It asks for more than names.', '✦', ''],
+      ['Crystal sings under the soil. Something below answers in the same key.', '☠', 'bad'],
+    ],
+    opening: 'Three keepers of a broken covenant. The stone is listening. It has been listening for a very long time.',
+  },
+};
+
+export const SCENARIO_ORDER = ['hearth', 'caravan', 'outpost', 'covenant'];
+
+export const NARRATORS = {
+  randy: {
+    id: 'randy', name: 'Randy Random', icon: '⚄', epithet: 'The Capricious Hand',
+    desc: 'Randy does not weigh your chances. He rolls the bones. One day a caravan; the next, a pyre. Expect anything, and never expect it twice.',
+    style: 'Chaotic', pace: [5, 17], weights: { hostile: 44, boon: 31, neutral: 25 },
+    severity: [.65, 1.78], volatility: 1, color: '#d7a85f',
+    voices: ['The bones tumble across the table.', 'Something laughs behind the rain.', 'A coin turns in the dark.', 'Randy shuffles the deck and smiles.'],
+    temper: ['Amused', 'Restless', 'Generous', 'Cruel'],
+  },
+  warden: {
+    id: 'warden', name: 'The Quiet Warden', icon: '☾', epithet: 'Keeper of Small Mercies',
+    desc: 'The Warden prefers a slow tale. Seasons turn, neighbors arrive, and the worst of the dark is kept at arm’s length. Do not mistake patience for safety.',
+    style: 'Gentle', pace: [14, 28], weights: { hostile: 18, boon: 48, neutral: 34 },
+    severity: [.72, 1.12], volatility: .16, color: '#8fa58a',
+    voices: ['A lantern moves along the ridge.', 'The Warden turns a page and waits.', 'Rain softens the road.'],
+    temper: ['Watchful', 'Patient', 'Kind', 'Stern'],
+  },
+  choir: {
+    id: 'choir', name: 'The Hollow Choir', icon: '✧', epithet: 'Voice Beneath the Veil',
+    desc: 'The Choir sings of teeth and old debts. Raids come often and hit hard, and every small mercy carries a price. The Marches are not a garden.',
+    style: 'Cruel', pace: [6, 13], weights: { hostile: 62, boon: 12, neutral: 26 },
+    severity: [1.12, 1.84], volatility: .58, color: '#b4786d',
+    voices: ['The Choir inhales. The trees go still.', 'A hymn with too many voices.', 'The dark leans closer to the fire.'],
+    temper: ['Hungry', 'Hollow', 'Vengeful', 'Delighted'],
+  },
+};
+
+export const NARRATOR_ORDER = ['randy', 'warden', 'choir'];
+
 export const INCIDENTS = [
   {
-    id: 'goblinRaid', weight: 24, minDay: 2, title: 'Raiders in the Pines', kicker: 'Incident · Hostile',
+    id: 'goblinRaid', weight: 24, minDay: 2, kind: 'hostile', title: 'Raiders in the Pines', kicker: 'Incident · Hostile',
     text: 'A goblin warband has caught the scent of your stores.',
     spawn: 'goblin', count: [2, 4],
   },
   {
-    id: 'wolfPack', weight: 15, minDay: 2, title: 'Hunger in the Dark', kicker: 'Incident · Predators',
+    id: 'wolfPack', weight: 15, minDay: 2, kind: 'hostile', title: 'Hunger in the Dark', kicker: 'Incident · Predators',
     text: 'Dire wolves circle the camp, drawn by the smell of cooking meat.',
     spawn: 'wolf', count: [2, 3],
   },
   {
-    id: 'skeletons', weight: 12, minDay: 3, title: 'Bones Remember', kicker: 'Incident · The Veil',
+    id: 'skeletons', weight: 12, minDay: 3, kind: 'hostile', title: 'Bones Remember', kicker: 'Incident · The Veil',
     text: 'The old barrows have opened. Restless dead walk toward the waystone.',
     spawn: 'skeleton', count: [2, 4],
   },
   {
-    id: 'cultists', weight: 9, minDay: 4, title: 'A Choir of Ash', kicker: 'Incident · Veil Cult',
+    id: 'cultists', weight: 9, minDay: 4, kind: 'hostile', title: 'A Choir of Ash', kicker: 'Incident · Veil Cult',
     text: 'Veil cultists come to finish what drowned the shrine.',
     spawn: 'cultist', count: [2, 3],
   },
   {
-    id: 'traveler', weight: 18, minDay: 1, title: 'A Stranger at the Fire', kicker: 'Incident · Wanderer',
+    id: 'traveler', weight: 18, minDay: 1, kind: 'boon', title: 'A Stranger at the Fire', kicker: 'Incident · Wanderer',
     text: 'A road-worn traveler asks for shelter. They have capable hands.',
     action: 'traveler',
   },
   {
-    id: 'merchant', weight: 14, minDay: 1, title: 'The Peddler’s Cart', kicker: 'Incident · Trade',
+    id: 'merchant', weight: 14, minDay: 1, kind: 'boon', title: 'The Peddler’s Cart', kicker: 'Incident · Trade',
     text: 'A masked merchant offers strange goods for silver.',
     action: 'merchant',
   },
   {
-    id: 'eclipse', weight: 8, minDay: 2, title: 'The Sun Turns Aside', kicker: 'Incident · Omen',
+    id: 'eclipse', weight: 8, minDay: 2, kind: 'neutral', title: 'The Sun Turns Aside', kicker: 'Incident · Omen',
     text: 'An unnatural eclipse drains the colour from the Marches. Moods sour.',
     action: 'eclipse',
   },
   {
-    id: 'cache', weight: 10, minDay: 1, title: 'A Cache in the Roots', kicker: 'Incident · Discovery',
+    id: 'cache', weight: 10, minDay: 1, kind: 'boon', title: 'A Cache in the Roots', kicker: 'Incident · Discovery',
     text: 'A colony scout finds a rain-sealed chest beneath an old oak.',
     action: 'cache',
   },
   {
-    id: 'omen', weight: 8, minDay: 3, title: 'The Waystone Murmurs', kicker: 'Incident · Arcana',
+    id: 'omen', weight: 8, minDay: 3, kind: 'boon', title: 'The Waystone Murmurs', kicker: 'Incident · Arcana',
     text: 'The broken waystone exhales. Your arcanists feel a pull toward the ruins.',
     action: 'omen',
   },
   {
-    id: 'festival', weight: 7, minDay: 4, title: 'A Small, Defiant Joy', kicker: 'Incident · Respite',
+    id: 'festival', weight: 7, minDay: 4, kind: 'boon', title: 'A Small, Defiant Joy', kicker: 'Incident · Respite',
     text: 'Someone finds a jar of honey. The colony gathers, and for a night, the dark waits.',
     action: 'festival',
   },
